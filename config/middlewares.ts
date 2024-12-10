@@ -13,12 +13,14 @@ export default [
             'data:',
             'blob:',
             'dev-penguin.s3.ap-southeast-1.amazonaws.com', // change here
+            'market-assets.strapi.io'
           ],
           'media-src': [
             "'self'",
             'data:',
             'blob:',
             'dev-penguin.s3.ap-southeast-1.amazonaws.com', // change here
+            'market-assets.strapi.io'
           ],
           upgradeInsecureRequests: null,
         },
