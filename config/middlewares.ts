@@ -13,6 +13,7 @@ export default [
             'data:',
             'blob:',
             'dev-penguin.s3.ap-southeast-1.amazonaws.com', // change here
+            'zhi-zhao-s3.s3.us-east-1.amazonaws.com',
             'market-assets.strapi.io'
           ],
           'media-src': [
@@ -20,6 +21,7 @@ export default [
             'data:',
             'blob:',
             'dev-penguin.s3.ap-southeast-1.amazonaws.com', // change here
+            'zhi-zhao-s3.s3.us-east-1.amazonaws.com',
             'market-assets.strapi.io'
           ],
           upgradeInsecureRequests: null,
