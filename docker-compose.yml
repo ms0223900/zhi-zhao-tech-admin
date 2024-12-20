@@ -20,6 +20,8 @@ services:
       - "1337:1337"
     depends_on:
       - postgres
+    networks:
+      - strapi-network
 
   postgres:
     image: postgres:14-alpine
@@ -31,6 +33,8 @@ services:
       - postgres-data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    networks:
+      - strapi-network
 
   nginx:
     build:
@@ -40,10 +44,13 @@ services:
       - "80:80"
     depends_on:
       - strapi
+    networks:
+      - strapi-network
 
 volumes:
   postgres-data:
 
 networks:
   strapi-network:
+    name: strapi-network
     driver: bridge
