@@ -43,3 +43,7 @@ services:
 
 volumes:
   postgres-data:
+
+networks:
+  strapi-network:
+    driver: bridge
