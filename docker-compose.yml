@@ -14,8 +14,7 @@ services:
     environment:
       - DATABASE_HOST=postgres
     volumes:
-      # - ./strapi:/opt/app  # 將本地的 strapi 目錄掛載到容器的 /opt/app 目錄，這樣可以在容器內部直接訪問本地的代碼。
-      - /opt/app/node_modules  # 將容器內的 node_modules 目錄掛載，這樣可以避免每次重啟容器時重新安裝依賴，提升性能。
+      - node_modules:/opt/app/node_modules  # 給 node_modules volume 一個固定名稱
     ports:
       - "1337:1337"
     depends_on:
@@ -54,6 +53,7 @@ services:
 
 volumes:
   postgres-data:
+  node_modules:    # 在這裡定義 node_modules volume
 
 networks:
   strapi-network:

@@ -9,7 +9,7 @@ WORKDIR /opt/app
 COPY package*.json ./
 
 COPY . .
-RUN npm install
+RUN npm ci --only=production
 
 RUN npm run build
 
