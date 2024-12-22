@@ -1,2 +1,2 @@
 git pull
-docker compose up --build --force-recreate strapi -d
+docker-compose up --build --force-recreate strapi -d
