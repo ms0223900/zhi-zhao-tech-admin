@@ -1,0 +1,19 @@
+{
+  "kind": "collectionType",
+  "collectionName": "project_genres",
+  "info": {
+    "singularName": "project-genre",
+    "pluralName": "project-genres",
+    "displayName": "ProjectGenre",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    }
+  }
+}

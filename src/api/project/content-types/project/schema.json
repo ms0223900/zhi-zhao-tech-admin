@@ -28,6 +28,36 @@
     },
     "description": {
       "type": "richtext"
+    },
+    "address": {
+      "type": "text"
+    },
+    "article": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::article.article"
+    },
+    "projectGenre": {
+      "type": "enumeration",
+      "enum": [
+        "b機電工程",
+        "c消防工程"
+      ]
+    },
+    "related_project_genre": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::project-genre.project-genre"
+    },
+    "from": {
+      "type": "date"
+    },
+    "until": {
+      "type": "date"
+    },
+    "contractingSystem": {
+      "type": "text",
+      "regex": "^([^,]+)(,[^,]+)*$"
     }
   }
 }
