@@ -1,0 +1,6 @@
+docker start strapi_postgres
+cd ./zhi-zhao-tech-admin
+yarn dev &
+cd ../zhi-zhao-tech-official-site
+yarn dev &
+wait

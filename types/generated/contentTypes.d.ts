@@ -617,6 +617,7 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
       'oneToOne',
       'api::project-genre.project-genre'
     >;
+    subtitle: Schema.Attribute.String & Schema.Attribute.Required;
     title: Schema.Attribute.String;
     until: Schema.Attribute.Date;
     updatedAt: Schema.Attribute.DateTime;

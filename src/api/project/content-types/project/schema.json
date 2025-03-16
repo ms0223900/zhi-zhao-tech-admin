@@ -58,6 +58,10 @@
     "contractingSystem": {
       "type": "text",
       "regex": "^([^,]+)(,[^,]+)*$"
+    },
+    "subtitle": {
+      "type": "string",
+      "required": true
     }
   }
 }
