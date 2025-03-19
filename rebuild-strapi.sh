@@ -5,4 +5,4 @@ git pull
 docker-compose down strapi -v
 
 # up strapi service
-docker-compose up --build --force-recreate strapi -d
+docker-compose up --build --no-cache --force-recreate strapi -d
