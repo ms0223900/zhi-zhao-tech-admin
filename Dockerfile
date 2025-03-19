@@ -7,6 +7,8 @@ RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev l
 WORKDIR /opt/app
 
 COPY package*.json ./
+# copy node_modules from app
+COPY /app/node_modules ./node_modules
 
 COPY . .
 RUN npm ci --only=production
