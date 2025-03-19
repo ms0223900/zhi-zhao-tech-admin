@@ -8,7 +8,7 @@ WORKDIR /opt/app
 
 COPY package*.json ./
 # copy node_modules from app
-COPY /app/node_modules ./node_modules
+COPY ./node_modules ./node_modules
 
 COPY . .
 RUN npm ci --only=production
