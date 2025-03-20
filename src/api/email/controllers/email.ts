@@ -13,14 +13,34 @@ oAuth2Client.setCredentials({
     refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
 });
 
+const EMAIL_SUBJECT = 'New Contact Form Submission';
+interface EmailRequestBody {
+    company: string,
+    location: string,
+    name: string,
+    phone: string,
+    email: string,
+    message: string
+}
+const getEmailContent = ({ company, location, name, phone, email, message }: EmailRequestBody) => {
+    return `
+    公司名稱: ${company}
+    地點: ${location}
+    姓名: ${name}
+    電話: ${phone}
+    電子郵件: ${email}
+    諮詢訊息: ${message}
+    `;
+};
+
 module.exports = {
     async send(ctx: Context) {
-        const { name, phone, email } = ctx.request.body;
+        const emailRequestBody = ctx.request.body as EmailRequestBody;
 
         try {
             const gmail = google.gmail({ version: 'v1', auth: oAuth2Client });
 
-            const utf8Subject = `=?utf-8?B?${Buffer.from('New Contact Form Submission').toString('base64')}?=`;
+            const utf8Subject = `=?utf-8?B?${Buffer.from(EMAIL_SUBJECT).toString('base64')}?=`;
             const messageParts = [
                 `From: ${process.env.GOOGLE_EMAIL}`,
                 `To: ${process.env.GOOGLE_EMAIL}`,
@@ -28,7 +48,7 @@ module.exports = {
                 'MIME-Version: 1.0',
                 `Subject: ${utf8Subject}`,
                 '',
-                `Name: ${name}\nPhone: ${phone}\nEmail: ${email}`,
+                getEmailContent(emailRequestBody),
             ];
 
             const message = messageParts.join('\n');
