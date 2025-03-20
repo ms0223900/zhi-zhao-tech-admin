@@ -41,12 +41,13 @@ const getEmailContent = ({ company, location, name, phone, email, message }: Ema
 
 module.exports = {
     async send(ctx: Context) {
-        const emailRequestBody = ctx.request.body as EmailRequestBody;
+        const emailRequestBody = ctx.request.body as { data: EmailRequestBody };
+        const { data } = emailRequestBody;
 
         try {
             const gmail = google.gmail({ version: 'v1', auth: oAuth2Client });
 
-            const utf8Subject = `=?utf-8?B?${Buffer.from(getEmailSubject(emailRequestBody)).toString('base64')}?=`;
+            const utf8Subject = `=?utf-8?B?${Buffer.from(getEmailSubject(data)).toString('base64')}?=`;
             const messageParts = [
                 `From: ${process.env.GOOGLE_EMAIL}`,
                 `To: ${process.env.GOOGLE_EMAIL}`,
@@ -54,7 +55,7 @@ module.exports = {
                 'MIME-Version: 1.0',
                 `Subject: ${utf8Subject}`,
                 '',
-                getEmailContent(emailRequestBody),
+                getEmailContent(data),
             ];
 
             const message = messageParts.join('\n');
@@ -70,7 +71,6 @@ module.exports = {
                     raw: encodedMessage,
                 },
             });
-
             ctx.send({
                 message: 'Email sent successfully',
                 data: res.data,
