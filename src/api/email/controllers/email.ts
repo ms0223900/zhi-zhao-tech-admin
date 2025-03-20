@@ -13,7 +13,13 @@ oAuth2Client.setCredentials({
     refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
 });
 
-const EMAIL_SUBJECT = 'New Contact Form Submission';
+const getEmailSubject = ({
+    name,
+    company,
+}: EmailRequestBody) => {
+    return `[${company}] ${name} 諮詢`;
+};
+
 interface EmailRequestBody {
     company: string,
     location: string,
@@ -40,7 +46,7 @@ module.exports = {
         try {
             const gmail = google.gmail({ version: 'v1', auth: oAuth2Client });
 
-            const utf8Subject = `=?utf-8?B?${Buffer.from(EMAIL_SUBJECT).toString('base64')}?=`;
+            const utf8Subject = `=?utf-8?B?${Buffer.from(getEmailSubject(emailRequestBody)).toString('base64')}?=`;
             const messageParts = [
                 `From: ${process.env.GOOGLE_EMAIL}`,
                 `To: ${process.env.GOOGLE_EMAIL}`,
