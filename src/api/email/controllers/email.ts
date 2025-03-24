@@ -45,32 +45,15 @@ module.exports = {
         const { data } = emailRequestBody;
 
         try {
-            const gmail = google.gmail({ version: 'v1', auth: oAuth2Client });
+            const emailRepository = new GmailRepository();
 
-            const utf8Subject = `=?utf-8?B?${Buffer.from(getEmailSubject(data)).toString('base64')}?=`;
-            const messageParts = [
-                `From: ${process.env.GOOGLE_EMAIL}`,
-                `To: ${process.env.GOOGLE_EMAIL}`,
-                'Content-Type: text/plain; charset=utf-8',
-                'MIME-Version: 1.0',
-                `Subject: ${utf8Subject}`,
-                '',
-                getEmailContent(data),
-            ];
+            const res = await emailRepository.sendEmail(
+                process.env.GOOGLE_EMAIL,
+                process.env.GOOGLE_EMAIL,
+                getEmailSubject(data),
+                getEmailContent(data)
+            );
 
-            const message = messageParts.join('\n');
-            const encodedMessage = Buffer.from(message)
-                .toString('base64')
-                .replace(/\+/g, '-')
-                .replace(/\//g, '_')
-                .replace(/=+$/, '');
-
-            const res = await gmail.users.messages.send({
-                userId: 'me',
-                requestBody: {
-                    raw: encodedMessage,
-                },
-            });
             ctx.send({
                 message: 'Email sent successfully',
                 data: res.data,
@@ -81,3 +64,50 @@ module.exports = {
         }
     },
 };
+
+
+interface EmailRepository {
+    sendEmail(fromEmail: string, toEmail: string, subject: string, content: string): Promise<{ data: any }>;
+}
+
+class GmailRepository implements EmailRepository {
+    async sendEmail(fromEmail: string, toEmail: string, subject: string, content: string): Promise<{ data: any }> {
+        const gmail = google.gmail({ version: 'v1', auth: oAuth2Client });
+
+        const utf8Subject = `=?utf-8?B?${Buffer.from(subject).toString('base64')}?=`;
+        const messageParts = [
+            `From: ${fromEmail}`,
+            `To: ${toEmail}`,
+            'Content-Type: text/plain; charset=utf-8',
+            'MIME-Version: 1.0',
+            `Subject: ${utf8Subject}`,
+            '',
+            content,
+        ];
+
+        const message = messageParts.join('\n');
+        const encodedMessage = Buffer.from(message)
+            .toString('base64')
+            .replace(/\+/g, '-')
+            .replace(/\//g, '_')
+            .replace(/=+$/, '');
+
+        const res = await gmail.users.messages.send({
+            userId: 'me',
+            requestBody: {
+                raw: encodedMessage,
+            },
+        });
+
+        return res;
+    }
+}
+
+
+
+
+
+
+
+
+
