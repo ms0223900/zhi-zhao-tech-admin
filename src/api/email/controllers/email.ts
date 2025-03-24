@@ -71,35 +71,47 @@ interface EmailRepository {
 }
 
 class GmailRepository implements EmailRepository {
-    async sendEmail(fromEmail: string, toEmail: string, subject: string, content: string): Promise<{ data: any }> {
-        const gmail = google.gmail({ version: 'v1', auth: oAuth2Client });
+    private readonly gmailClient = google.gmail({ version: 'v1', auth: oAuth2Client });
 
-        const utf8Subject = `=?utf-8?B?${Buffer.from(subject).toString('base64')}?=`;
-        const messageParts = [
+    private encodeSubject(subject: string): string {
+        const base64Subject = Buffer.from(subject).toString('base64');
+        return `=?utf-8?B?${base64Subject}?=`;
+    }
+
+    private buildEmailMessage(fromEmail: string, toEmail: string, subject: string, content: string): string {
+        const emailHeaders = [
             `From: ${fromEmail}`,
             `To: ${toEmail}`,
             'Content-Type: text/plain; charset=utf-8',
             'MIME-Version: 1.0',
-            `Subject: ${utf8Subject}`,
-            '',
+            `Subject: ${this.encodeSubject(subject)}`,
+            '', // Empty line separates headers from body
             content,
         ];
 
-        const message = messageParts.join('\n');
-        const encodedMessage = Buffer.from(message)
+        return emailHeaders.join('\n');
+    }
+
+    private encodeMessage(message: string): string {
+        return Buffer.from(message)
             .toString('base64')
             .replace(/\+/g, '-')
             .replace(/\//g, '_')
             .replace(/=+$/, '');
+    }
 
-        const res = await gmail.users.messages.send({
+    async sendEmail(fromEmail: string, toEmail: string, subject: string, content: string): Promise<{ data: any }> {
+        const rawMessage = this.buildEmailMessage(fromEmail, toEmail, subject, content);
+        const encodedMessage = this.encodeMessage(rawMessage);
+
+        const response = await this.gmailClient.users.messages.send({
             userId: 'me',
             requestBody: {
                 raw: encodedMessage,
             },
         });
 
-        return res;
+        return response;
     }
 }
 
