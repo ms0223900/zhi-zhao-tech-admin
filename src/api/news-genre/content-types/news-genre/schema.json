@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "news_genres",
+  "info": {
+    "singularName": "news-genre",
+    "pluralName": "news-genres",
+    "displayName": "NewsGenre"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    }
+  }
+}
