@@ -13,15 +13,17 @@
   "pluginOptions": {},
   "attributes": {
     "content": {
-      "type": "richtext"
+      "type": "richtext",
+      "required": true
     },
     "title": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "cover": {
       "type": "media",
       "multiple": false,
-      "required": false,
+      "required": true,
       "allowedTypes": [
         "images",
         "files",
@@ -35,7 +37,8 @@
       "target": "api::news-genre.news-genre"
     },
     "subtitle": {
-      "type": "string"
+      "type": "string",
+      "required": true
     }
   }
 }
