@@ -584,6 +584,7 @@ export interface ApiProjectGenreProjectGenre
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    key: Schema.Attribute.String & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -627,9 +628,6 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
       'api::project.project'
     > &
       Schema.Attribute.Private;
-    projectGenre: Schema.Attribute.Enumeration<
-      ['b\u6A5F\u96FB\u5DE5\u7A0B', 'c\u6D88\u9632\u5DE5\u7A0B']
-    >;
     publishedAt: Schema.Attribute.DateTime;
     related_project_genre: Schema.Attribute.Relation<
       'oneToOne',
