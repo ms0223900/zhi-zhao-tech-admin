@@ -49,8 +49,8 @@ module.exports = {
 
             const res = await emailRepository.sendEmail(
                 {
-                    fromEmail: process.env.GOOGLE_EMAIL,
-                    toEmail: process.env.GOOGLE_EMAIL,
+                    senderEmail: process.env.GOOGLE_EMAIL,
+                    receiverEmail: process.env.GOOGLE_EMAIL,
                     subject: getEmailSubject(data),
                     content: getEmailContent(data)
                 }
@@ -68,8 +68,8 @@ module.exports = {
 };
 
 interface SendEmailParams {
-    fromEmail: string;
-    toEmail: string;
+    senderEmail: string;
+    receiverEmail: string;
     subject: string;
     content: string;
 }
@@ -87,8 +87,8 @@ class GmailRepository implements EmailRepository {
 
     private buildEmailMessage(params: SendEmailParams): string {
         const emailHeaders = [
-            `From: ${params.fromEmail}`,
-            `To: ${params.toEmail}`,
+            `From: ${params.senderEmail}`,
+            `To: ${params.receiverEmail}`,
             'Content-Type: text/plain; charset=utf-8',
             'MIME-Version: 1.0',
             `Subject: ${this.encodeSubject(params.subject)}`,
