@@ -49,8 +49,8 @@ module.exports = {
 
             const res = await emailRepository.sendEmail(
                 {
-                    senderEmail: process.env.GOOGLE_EMAIL,
-                    receiverEmail: process.env.GOOGLE_EMAIL,
+                    senderEmail: process.env.GOOGLE_SENDER_EMAIL,
+                    receiverEmail: process.env.GOOGLE_RECEIVER_EMAIL,
                     subject: getEmailSubject(data),
                     content: getEmailContent(data)
                 }
