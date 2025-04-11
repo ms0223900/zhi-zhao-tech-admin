@@ -48,10 +48,12 @@ module.exports = {
             const emailRepository = new GmailRepository();
 
             const res = await emailRepository.sendEmail(
-                process.env.GOOGLE_EMAIL,
-                process.env.GOOGLE_EMAIL,
-                getEmailSubject(data),
-                getEmailContent(data)
+                {
+                    fromEmail: process.env.GOOGLE_EMAIL,
+                    toEmail: process.env.GOOGLE_EMAIL,
+                    subject: getEmailSubject(data),
+                    content: getEmailContent(data)
+                }
             );
 
             ctx.send({
@@ -65,9 +67,14 @@ module.exports = {
     },
 };
 
-
+interface SendEmailParams {
+    fromEmail: string;
+    toEmail: string;
+    subject: string;
+    content: string;
+}
 interface EmailRepository {
-    sendEmail(fromEmail: string, toEmail: string, subject: string, content: string): Promise<{ data: any }>;
+    sendEmail(params: SendEmailParams): Promise<{ data: any }>;
 }
 
 class GmailRepository implements EmailRepository {
@@ -78,15 +85,15 @@ class GmailRepository implements EmailRepository {
         return `=?utf-8?B?${base64Subject}?=`;
     }
 
-    private buildEmailMessage(fromEmail: string, toEmail: string, subject: string, content: string): string {
+    private buildEmailMessage(params: SendEmailParams): string {
         const emailHeaders = [
-            `From: ${fromEmail}`,
-            `To: ${toEmail}`,
+            `From: ${params.fromEmail}`,
+            `To: ${params.toEmail}`,
             'Content-Type: text/plain; charset=utf-8',
             'MIME-Version: 1.0',
-            `Subject: ${this.encodeSubject(subject)}`,
+            `Subject: ${this.encodeSubject(params.subject)}`,
             '', // Empty line separates headers from body
-            content,
+            params.content,
         ];
 
         return emailHeaders.join('\n');
@@ -100,8 +107,8 @@ class GmailRepository implements EmailRepository {
             .replace(/=+$/, '');
     }
 
-    async sendEmail(fromEmail: string, toEmail: string, subject: string, content: string): Promise<{ data: any }> {
-        const rawMessage = this.buildEmailMessage(fromEmail, toEmail, subject, content);
+    async sendEmail(params: SendEmailParams): Promise<{ data: any }> {
+        const rawMessage = this.buildEmailMessage(params);
         const encodedMessage = this.encodeMessage(rawMessage);
 
         const response = await this.gmailClient.users.messages.send({
