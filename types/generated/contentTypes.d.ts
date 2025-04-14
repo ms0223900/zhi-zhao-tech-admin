@@ -612,7 +612,6 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
   };
   attributes: {
     address: Schema.Attribute.Text;
-    contractingSystem: Schema.Attribute.Text;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -629,11 +628,11 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    related_project_genre: Schema.Attribute.Relation<
-      'oneToOne',
+    related_project_genres: Schema.Attribute.Relation<
+      'oneToMany',
       'api::project-genre.project-genre'
     >;
-    subtitle: Schema.Attribute.String & Schema.Attribute.Required;
+    subtitle: Schema.Attribute.String;
     title: Schema.Attribute.String;
     until: Schema.Attribute.Date;
     updatedAt: Schema.Attribute.DateTime;

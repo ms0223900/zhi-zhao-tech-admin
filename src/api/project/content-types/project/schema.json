@@ -32,9 +32,9 @@
     "address": {
       "type": "text"
     },
-    "related_project_genre": {
+    "related_project_genres": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "oneToMany",
       "target": "api::project-genre.project-genre"
     },
     "from": {
@@ -43,13 +43,9 @@
     "until": {
       "type": "date"
     },
-    "contractingSystem": {
-      "type": "text",
-      "regex": "^([^,]+)(,[^,]+)*$"
-    },
     "subtitle": {
       "type": "string",
-      "required": true
+      "required": false
     }
   }
 }
