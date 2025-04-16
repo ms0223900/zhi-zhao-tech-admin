@@ -36,7 +36,7 @@ export default [
     name: 'strapi::body',
     config: {
       formidable: {
-        maxFileSize: 2 * 1024 * 1024, // 2MB
+        maxFileSize: 20 * 1024 * 1024, // 20MB
       },
     },
   },
