@@ -13,8 +13,12 @@ export default ({ env }) => ({
                 },
             },
             actionOptions: {
-                upload: {},
-                uploadStream: {},
+                upload: {
+                    sizeLimit: 2 * 1024 * 1024, // 2MB
+                },
+                uploadStream: {
+                    sizeLimit: 2 * 1024 * 1024, // 2MB
+                },
                 delete: {},
             },
         },
