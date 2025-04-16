@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "download_files",
+  "info": {
+    "singularName": "download-file",
+    "pluralName": "download-files",
+    "displayName": "DownloadFile",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": false
+    },
+    "file": {
+      "type": "media",
+      "multiple": true,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  }
+}
