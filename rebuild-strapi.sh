@@ -1,6 +1,10 @@
 # pull latest code
 git pull
 
+# prune dangling images and builder cache
+docker image prune -f
+docker builder prune -f
+
 # down strapi service
 docker-compose down strapi -v
 
