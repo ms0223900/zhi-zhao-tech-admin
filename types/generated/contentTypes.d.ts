@@ -429,6 +429,70 @@ export interface ApiAuthorAuthor extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCareerNewsGenreCareerNewsGenre
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'career_news_genres';
+  info: {
+    displayName: 'CareerNewsGenre';
+    pluralName: 'career-news-genres';
+    singularName: 'career-news-genre';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::career-news-genre.career-news-genre'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCareerNewsCareerNews extends Struct.CollectionTypeSchema {
+  collectionName: 'career_newses';
+  info: {
+    description: '';
+    displayName: 'CareerNews';
+    pluralName: 'career-newses';
+    singularName: 'career-news';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    content: Schema.Attribute.RichText & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::career-news.career-news'
+    > &
+      Schema.Attribute.Private;
+    newsGenre: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::career-news-genre.career-news-genre'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    subtitle: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   collectionName: 'categories';
   info: {
@@ -1186,6 +1250,8 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::about.about': ApiAboutAbout;
       'api::author.author': ApiAuthorAuthor;
+      'api::career-news-genre.career-news-genre': ApiCareerNewsGenreCareerNewsGenre;
+      'api::career-news.career-news': ApiCareerNewsCareerNews;
       'api::category.category': ApiCategoryCategory;
       'api::download-file.download-file': ApiDownloadFileDownloadFile;
       'api::global.global': ApiGlobalGlobal;

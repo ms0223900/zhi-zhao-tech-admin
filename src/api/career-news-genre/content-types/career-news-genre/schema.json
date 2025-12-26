@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "career_news_genres",
+  "info": {
+    "singularName": "career-news-genre",
+    "pluralName": "career-news-genres",
+    "displayName": "CareerNewsGenre"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    }
+  }
+}
